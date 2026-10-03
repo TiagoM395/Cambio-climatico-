@@ -1,0 +1,27 @@
+# Entornos virtuales (el de la raiz es de otra maquina: apunta a C:\Python313)
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Credenciales (por si se agrega alguna mas adelante)
+.env
+*.pem
+*.key
+
+# Sistema y editores
+Thumbs.db
+desktop.ini
+.DS_Store
+*~
+*.bak
+*.tmp
+
+# Respaldo en zip del 25/09: es una copia del propio proyecto,
+# asi que no va al repo (el historial de git ya es el respaldo).
+# Si igual lo queres subido, borra estas dos lineas.
+_RESPALDO/

@@ -1,0 +1,15 @@
+dataset,fuente,periodo,filas,unidad,tipo
+Anomalía de temperatura y precipitación nacional,CIAM / SMN,1961-2025,65,años,descargado
+Precipitación anual por estación meteorológica,CIAM / SMN,2010-2024,26,estaciones,descargado
+Crecimiento anual del PBI,Banco Mundial,1960-2025,66,años,descargado
+"Emisiones de CO₂, población y PBI (solo Argentina)",Global Carbon Project / OWID,1850-2024,175,años; filtrados de 50.411 filas del archivo mundial,descargado
+Temperatura anual por provincia,NASA POWER,1981-2025,1080,provincia-año,descargado
+"Clima mensual por provincia (temperatura, lluvia, viento)",NASA POWER,1981-2023,12384,provincia-mes,descargado
+Producto bruto geográfico provincial (por sector),CEPAL,2004-2024,1350,filas en 25 hojas,descargado
+"Inventario Nacional de GEI, serie por gas y sector",Secretaría de Ambiente,1990-2022,7780,"filas, hoja de la serie",descargado
+Inventario de GEI desagregado por provincia,Secretaría de Ambiente,2010-2022,876,filas en 26 hojas,descargado
+"Estimaciones agrícolas por cultivo, provincia y departamento",Ministerio de Economía (Agricultura),1969-2024,160499,cultivo-departamento-año,descargado
+Población por provincia (proyecciones),INDEC,2010-2040,744,provincia-año,descargado
+Límites de provincias (mapa),IGN,—,24,polígonos,descargado
+Dataset nacional integrado,Unión por año de los anteriores,1961-2025,65,años,integrado
+Dataset provincial integrado,Unión por año de los anteriores,1981-2025,1080,provincia-año,integrado

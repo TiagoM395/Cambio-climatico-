@@ -1,0 +1,11 @@
+metodo,coeficiente,p_valor,n_observaciones,variable_climatica,variable_economica
+pearson,-0.14026445343059768,0.2650964406835425,65,anomalia_temperatura,pbi_crecimiento_pct
+spearman,-0.11117790916160737,0.3779441030020264,65,anomalia_temperatura,pbi_crecimiento_pct
+pearson,-0.1442787434119761,0.2515247359522573,65,anomalia_precipitacion_pct,pbi_crecimiento_pct
+spearman,-0.16555944055944055,0.18750357460206857,65,anomalia_precipitacion_pct,pbi_crecimiento_pct
+pearson,0.18086401109953545,0.5543073140630657,13,emisiones_gei_co2eq,pbi_crecimiento_pct
+spearman,0.25274725274725274,0.40477407127094633,13,emisiones_gei_co2eq,pbi_crecimiento_pct
+pearson,-0.12079384896944734,0.3496823137071943,62,anomalia_temperatura,pib_per_capita_crecimiento_pct
+spearman,-0.08640343090466027,0.5042956675260988,62,anomalia_temperatura,pib_per_capita_crecimiento_pct
+pearson,-0.14242196908222016,0.26948471190829193,62,anomalia_precipitacion_pct,pib_per_capita_crecimiento_pct
+spearman,-0.1676865352169424,0.19266326484410545,62,anomalia_precipitacion_pct,pib_per_capita_crecimiento_pct

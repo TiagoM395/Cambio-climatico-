@@ -1,0 +1,142 @@
+INSTITUTO 57
+Tecnicatura Superior en Ciencia de Datos e Inteligencia Artificial
+Análisis y Exploración de Datos
+TRABAJO PRÁCTICO INTEGRADOR
+Cambio climático en Argentina y su relación con el crecimiento económico (PBI)
+Autor/a: Rodrigo Bulggiani, Elias Campos, Romina Guzmán y Tiago Maidana
+Docente: Ibarra Martín
+Comisión: 2° año, grupo 6
+Fecha de entrega: 30/11/2026
+Índice
+1. Introducción y Fundamento
+2. Objetivos
+3. Pregunta de Investigación e Hipótesis
+4. Descripción del Dataset
+5. Marco Metodológico — CRISP-DM
+6. Cronograma / Plan de Trabajo
+7. Resultados Esperados
+8. Conclusiones
+9. Bibliografía y Fuentes de Datos
+10. Anexos
+11. Extensión: Análisis por Provincia
+1. Introducción y Fundamento
+Breve contexto del problema elegido y por qué se seleccionó entre las alternativas evaluadas.
+Contexto del problema: El cambio climático es uno de los principales desafíos ambientales a nivel global, y se manifiesta a través de varios indicadores a la vez: aumento de la temperatura media, cambios en el régimen de precipitaciones, y crecimiento de las emisiones de gases de efecto invernadero, entre otros. Argentina, como país en vías de desarrollo con una matriz productiva que combina agroindustria, energía e industria, enfrenta el desafío de crecer económicamente en el marco de compromisos internacionales como el Acuerdo de París y su Contribución Determinada a Nivel Nacional (NDC). Este proyecto analiza la evolución histórica del cambio climático en Argentina entre 1972 y 2023 a través de tres indicadores —la anomalía de temperatura media anual, las precipitaciones y las emisiones de CO2— y su relación con el Producto Bruto Interno (PBI). A partir de este análisis se busca construir un modelo que permita estimar la evolución futura de la temperatura y evaluar si existe una tendencia de desacople entre crecimiento económico e impacto climático.
+Por qué se eligió este proyecto: Entre las alternativas evaluadas por el grupo se consideraron también: análisis de las Pruebas Aprender (financiamiento educativo y deserción escolar), auditoría de precios de laptops según especificaciones técnicas, y detección de fraude en transacciones financieras (dataset de Kaggle/ULB). Se optó por el proyecto de cambio climático por la calidad y disponibilidad de series históricas largas y confiables para Argentina, y por su relevancia social y ambiental, al tratarse de una problemática de actualidad con impacto directo en políticas públicas.
+Relevancia / impacto esperado: El análisis resulta de utilidad para estudiantes, docentes y responsables de política ambiental o energética interesados en entender cómo evolucionó la relación entre crecimiento económico y cambio climático en Argentina, y aporta una primera aproximación cuantitativa (modelo predictivo) que podría complementarse con estudios sectoriales más detallados.
+2. Objetivos
+2.1 Objetivo general
+Analizar la evolución histórica del cambio climático en Argentina, a través de tres indicadores (anomalía de temperatura media anual, precipitaciones y emisiones de CO2), y su relación con el crecimiento del PBI, y construir un modelo que permita estimar la evolución futura de la temperatura a partir de esas variables.
+2.2 Objetivos específicos
+Objetivo específico 1: Explorar la relación entre el PBI, las emisiones de CO2, las precipitaciones y la anomalía de temperatura media anual de Argentina entre 1972 y 2023.
+Objetivo específico 2: Construir y comparar modelos de regresión (Regresión Lineal y Random Forest) que predigan la anomalía de temperatura a partir del PBI, las emisiones de CO2 y las precipitaciones.
+Objetivo específico 3: Evaluar si Argentina muestra una tendencia de desacople entre crecimiento económico e impacto climático, comparando la fuerza de la relación PBI-temperatura entre la primera y la segunda mitad del período analizado.
+3. Pregunta de Investigación e Hipótesis
+Pregunta central: ¿Cómo se relacionan el crecimiento del PBI, las emisiones de CO2 y las precipitaciones de Argentina con la anomalía de temperatura media del país, y es posible predecir la evolución futura de esa anomalía a partir de esas variables?
+Hipótesis de trabajo: El PBI y las emisiones de CO2 de Argentina están correlacionados positivamente con la anomalía de temperatura media anual del país, mientras que las precipitaciones muestran una relación negativa (a mayor calentamiento, menor precipitación media); esa relación se mantiene o se fortalece con el tiempo, sin evidencia de un desacople entre crecimiento económico e impacto climático en el período analizado.
+4. Descripción del Dataset
+Fuente: Dataset combinado a partir de cuatro series de Our World in Data, todas filtradas por Argentina y combinadas por año: (1) Annual Temperature Anomalies (anomalía de temperatura media anual respecto de la base 1991-2020, en base a datos Copernicus Climate Change Service / reanálisis ERA5); (2) GDP — Penn World Table (variable rgdpo: PBI real “output-side”, en USD, PPP constantes de 2021); (3) Annual CO2 emissions (emisiones totales de CO2 en toneladas, Global Carbon Project vía Our World in Data); (4) Average precipitation per year (precipitación media anual en mm, también en base a reanálisis ERA5/Copernicus).
+Tamaño: 52 filas (una por año) × 5 columnas (year, temp_anomaly_c, gdp_rgdpo_usd, co2_emissions_t, precipitation_mm), sin valores faltantes.
+Período temporal: 1972-2023 (52 años), definido por la disponibilidad conjunta de las cuatro variables.
+Variables principales: year — año (numérica, temporal). temp_anomaly_c — anomalía de temperatura media anual en °C respecto de la base 1991-2020 (numérica, variable objetivo). gdp_rgdpo_usd — PBI real en USD, PPP constantes de 2021 (numérica, variable explicativa). co2_emissions_t — emisiones anuales de CO2 en toneladas (numérica, variable explicativa). precipitation_mm — precipitación media anual en mm (numérica, variable explicativa).
+Variable pendiente — viento: No se encontró una fuente nacional de velocidad de viento con serie histórica comparable a las anteriores. Se incorpora a nivel de provincia en la Sección 11 (vía NASA POWER), y de ahí se puede derivar un promedio nacional aproximado corriendo el script adjunto.
+Licencia / condiciones de uso: Todas las fuentes tienen licencia abierta: los datos de Our World in Data se publican bajo Creative Commons BY, y el Penn World Table es de uso académico libre citando a Feenstra, Inklaar y Timmer (2015); uso permitido citando la fuente.
+5. Marco Metodológico — CRISP-DM
+Se aplica la metodología CRISP-DM (Cross-Industry Standard Process for Data Mining), que estructura el proyecto en seis fases.
+5.1 Business Understanding (Entendimiento del negocio)
+Explorar las expectativas y el problema a resolver.
+Determinación de objetivos de negocio: Entender cómo evolucionó el impacto climático de Argentina —medido a través de temperatura, precipitaciones y emisiones de CO2— en relación con su crecimiento económico, como insumo para la discusión de políticas ambientales y energéticas.
+Evaluación de la situación: Se cuenta con datos públicos, gratuitos y de fuentes reconocidas internacionalmente (Copernicus/C3S, Global Carbon Project y Penn World Table, vía Our World in Data). Como limitación, el PBI y las emisiones de CO2 están altamente correlacionados entre sí (r = 0,95, ver Sección 5.2), lo que genera multicolinealidad y dificulta separar el efecto de cada uno por separado; tampoco se incorporó todavía viento a nivel nacional (ver Sección 4).
+Determinación de objetivos de minería de datos: Se traduce el objetivo de negocio en un problema de regresión: predecir una variable numérica continua (temp_anomaly_c) a partir de tres variables explicativas numéricas (gdp_rgdpo_usd, co2_emissions_t, precipitation_mm).
+Producción de un plan de proyecto: Ver cronograma detallado en la Sección 6, alineado con el Plan de Proyecto ya presentado (11 semanas, desde el 14/09/2026 hasta el 30/11/2026).
+5.2 Data Understanding (Entendimiento de los datos)
+Recopilación de datos iniciales: Se descargaron los cuatro datasets (temperatura, PBI, CO2 y precipitaciones) desde Our World in Data en formato CSV, se filtraron por Argentina y se combinaron por año.
+Descripción de los datos: El dataset combinado contiene 52 registros anuales (1972-2023) y 5 columnas (year, temp_anomaly_c, gdp_rgdpo_usd, co2_emissions_t, precipitation_mm).
+Exploración de datos (EDA) — correlaciones: Matriz de correlación de Pearson entre las cuatro variables numéricas: temperatura-PBI r = 0,66; temperatura-CO2 r = 0,62; temperatura-precipitación r = -0,60; PBI-CO2 r = 0,95 (muy alta: multicolinealidad esperable entre ambas); PBI-precipitación r = -0,62; CO2-precipitación r = -0,61. Es decir, a medida que crecieron el PBI y las emisiones, la temperatura subió y las precipitaciones bajaron.
+Exploración de datos (EDA) — evolución por variable: Temperatura: promedio por década en claro ascenso (1970s -0,45°C, 1980s -0,23°C, 1990s -0,24°C, 2000s -0,08°C, 2010s +0,24°C, 2020s +0,54°C). CO2: las emisiones casi se duplicaron entre 1972 y 2023 (+98%, de 90 a 178 millones de toneladas). Precipitaciones: el promedio anual bajó un 13,1% entre 1972-1999 (854 mm) y 2000-2023 (742 mm). PBI: se multiplicó por cerca de 11 veces en el mismo período. Al dividir la serie temperatura-PBI en dos mitades, la correlación fue más débil en 1972-1999 (r = 0,28) y más fuerte en 2000-2023 (r = 0,60): la relación se intensificó en las últimas dos décadas, en lugar de debilitarse.
+Verificación de calidad de datos: No se detectaron valores nulos ni duplicados en el período 1972-2023 para ninguna de las cuatro variables (un registro por año).
+5.3 Data Preparation (Preparación de los datos)
+Selección de datos: Se conservaron year, temp_anomaly_c, gdp_rgdpo_usd, co2_emissions_t y precipitation_mm; al tratarse de fuentes ya alineadas por año, no se descartaron columnas adicionales.
+Limpieza de datos: No fue necesario eliminar registros: el panel de 52 años (1972-2023) no presenta valores faltantes en las variables utilizadas.
+Construcción de nuevas variables: No se construyeron variables derivadas adicionales; se utilizó directamente la anomalía de temperatura como variable objetivo y PBI, CO2 y precipitaciones como variables explicativas.
+Integración de datos: Combinación por año (inner join) de las cuatro fuentes descriptas en la Sección 4.
+Formato final de los datos: Tabla de 52 filas (una por año, 1972-2023) y 4 columnas numéricas explicativas/objetivo, ordenada cronológicamente para permitir una partición temporal train/test.
+5.4 Modeling (Modelado)
+Selección de técnicas de modelado: Se probaron dos técnicas: Regresión Lineal (modelo simple e interpretable, con coeficientes) y Random Forest Regressor (modelo no lineal, capaz de capturar interacciones entre variables), ambas para predecir temp_anomaly_c a partir de gdp_rgdpo_usd, co2_emissions_t y precipitation_mm.
+Generación de un diseño de comprobación: Partición temporal (no aleatoria): entrenamiento con los años 1972-2010 (39 observaciones) y prueba con los años 2011-2023 (13 observaciones), simulando un escenario real de predicción hacia el futuro.
+Generación de los modelos: Regresión Lineal con 3 variables explicativas (gdp_rgdpo_usd, co2_emissions_t, precipitation_mm); Random Forest con 200 árboles y las mismas 3 variables (hiperparámetros por defecto de scikit-learn salvo n_estimators=200, random_state=42).
+Evaluación técnica del modelo: Ver tabla comparativa a continuación. En el Random Forest, la importancia relativa de cada variable fue: precipitación 47%, CO2 27%, PBI 26% — la precipitación fue la que más ayudó a distinguir años distintos, más allá de la tendencia general.
+Modelo | RMSE | MAE | R²
+Baseline ingenuo (repetir último valor observado) | 0,623 | — | —
+Regresión Lineal (PBI + CO2 + precipitación) | 0,316 | 0,255 | -0,553
+Random Forest (200 árboles, PBI + CO2 + precipitación) | 0,484 | 0,415 | -2,645
+5.5 Evaluation (Evaluación)
+Evaluación de los resultados: La Regresión Lineal fue el único modelo que superó claramente al baseline ingenuo (49,3% menos RMSE); el Random Forest lo superó en menor medida (22,4% menos RMSE). Agregar CO2 y precipitación mejoró ambos modelos frente a la versión con una sola variable (PBI): la Regresión Lineal pasó de 47,5% a 49,3% de mejora, y el Random Forest de 17,5% a 22,4%. Esto confirma parcialmente la hipótesis: existe relación predictiva entre estas variables y la temperatura, aunque el margen de mejora sigue siendo moderado y ambos modelos tienen R² negativo en el período de test, lo que indica que todavía no explican bien la variabilidad año a año.
+Proceso de revisión: Se detectó fuerte multicolinealidad entre PBI y CO2 (r = 0,95, Sección 5.2): ambas variables crecen casi en paralelo, por lo que sus coeficientes individuales en la Regresión Lineal no deben interpretarse por separado como “efecto puro” de cada una. El Random Forest, al tener variables explicativas cuyo rango en el período de test (2011-2023) supera al del entrenamiento (1972-2010), sigue teniendo margen limitado para extrapolar, aunque mejoró respecto del modelo de una sola variable. El tamaño reducido de la serie (52 observaciones anuales) también limita la robustez estadística de ambos modelos.
+Determinación de próximos pasos: Incorporar variables adicionales (población, consumo de energía primaria, viento a nivel nacional una vez corrido el script de la Sección 11), aplicar modelos de series de tiempo (ARIMA/Prophet) que manejen mejor la tendencia temporal, y probar técnicas de regularización (Ridge/Lasso) para mitigar la multicolinealidad entre PBI y CO2.
+5.6 Deployment (Despliegue)
+Planificación del despliegue: Informe final en formato Word/PDF, notebook de Python (con apoyo de Orange Data Mining para partes del flujo de trabajo, indicado por la cátedra) y presentación de 10-15 minutos ante el docente.
+Planificación del control y mantenimiento: El análisis podría actualizarse cada vez que Our World in Data publique una nueva versión de los datasets utilizados (actualización aproximadamente anual), reemplazando los archivos CSV de origen y re-ejecutando el notebook.
+Creación de un informe final: Este mismo documento (Trabajo Práctico Integrador) junto con el notebook de análisis.
+Revisión final del proyecto: Checklist previo a la entrega: verificar que se cumplieron los 3 objetivos específicos de la Sección 2, que las métricas de los modelos están documentadas, y que el informe y la presentación están alineados.
+6. Cronograma / Plan de Trabajo
+Estimación de tiempos por etapa del proyecto.
+Etapa (CRISP-DM) | Tareas principales | Fecha estimada
+Business Understanding | Definir problema, objetivo, alcance y pregunta de investigación | Semana 1 (15-21/09/2026)
+Data Understanding | Descargar el dataset, realizar el EDA y el control de calidad de los datos | Semanas 2-3 (22/09 al 05/10/2026)
+Data Preparation | Seleccionar variables, limpiar datos y armar la partición train/test | Semanas 4-6 (06/10 al 26/10/2026)
+Modeling | Entrenar y comparar los modelos (Regresión Lineal y Random Forest) | Semanas 7-8 (27/10 al 09/11/2026)
+Evaluation | Evaluar métricas, comparar contra el baseline y analizar limitaciones | Semana 9 (10-16/11/2026)
+Deployment | Armar el informe final, los gráficos y preparar la presentación | Semanas 10-11 (17-30/11/2026)
+7. Resultados Esperados
+Entregable principal: Informe final (Word/PDF) + notebook de Python con el análisis y los modelos + apoyo de Orange Data Mining + presentación de 10-15 minutos.
+Métricas de éxito: El modelo debía superar al baseline ingenuo (RMSE de referencia: 0,623). La Regresión Lineal lo logra, con un RMSE de 0,316 (≈49,3% de mejora); el Random Forest también lo supera, aunque en menor medida (RMSE 0,484, ≈22,4% de mejora).
+Alcance y limitaciones conocidas: El análisis es a nivel nacional agregado, sin desagregación sectorial; no se realiza una comparación exhaustiva con otros países; PBI y CO2 están altamente correlacionados entre sí (multicolinealidad), lo que limita la interpretación individual de sus coeficientes aunque no impide usarlos juntos para predecir; el viento todavía no está incorporado a nivel nacional (ver Sección 4 y 11).
+8. Conclusiones
+El análisis confirma una asociación moderada-alta entre la temperatura de Argentina y sus principales variables económicas y climáticas en 1972-2023: correlación positiva con el PBI (r = 0,66) y con las emisiones de CO2 (r = 0,62), y negativa con las precipitaciones (r = -0,60), en línea con la hipótesis planteada. En el mismo período, el PBI se multiplicó por cerca de 11 veces, las emisiones de CO2 casi se duplicaron (+98%), y las precipitaciones cayeron un 13,1% al comparar 1972-1999 contra 2000-2023. A diferencia de lo esperado, no se observa un desacople entre crecimiento económico e impacto climático: la correlación PBI-temperatura fue más débil en la primera mitad del período (r = 0,28) y se fortaleció en la segunda mitad (r = 0,60). El modelo de Regresión Lineal con las tres variables (PBI, CO2, precipitación) logró predecir la anomalía de temperatura del período 2011-2023 con una mejora de aproximadamente 49,3% de RMSE respecto de un baseline ingenuo, cumpliendo el segundo objetivo específico, y superó a la versión con una sola variable (PBI, 47,5% de mejora), aunque el Random Forest mostró una limitación clara para extrapolar fuera del rango de valores visto en entrenamiento. Se dieron por cumplidos los tres objetivos planteados en la Sección 2, aunque el poder predictivo del modelo está limitado por el tamaño reducido de la serie histórica (52 años) y por la fuerte multicolinealidad entre PBI y CO2, lo que abre camino a líneas de trabajo futuro como las mencionadas en la Sección 5.5.
+9. Bibliografía y Fuentes de Datos
+Fuente de datos — temperatura: Contains modified Copernicus Climate Change Service information (2026). Annual Temperature Anomalies. Procesado por Our World in Data. https://ourworldindata.org/grapher/annual-temperature-anomalies
+Fuente de datos — precipitación: Contains modified Copernicus Climate Change Service information (2026). Average Precipitation per Year. Procesado por Our World in Data. https://ourworldindata.org/grapher/average-precipitation-per-year
+Fuente de datos — emisiones de CO2: Global Carbon Project (2024). Annual CO2 emissions. Procesado por Our World in Data. https://ourworldindata.org/grapher/annual-co2-emissions-per-country
+Fuente de datos — PBI: Feenstra, R. C., Inklaar, R. y Timmer, M. P. (2015). The Next Generation of the Penn World Table. American Economic Review, 105(10), 3150-3182. Datos procesados por Our World in Data. https://ourworldindata.org/grapher/gdp-penn-world-table
+Fuente de datos — extensión provincial (temperatura, precipitación, viento): NASA Langley Research Center (POWER Project). https://power.larc.nasa.gov
+Bibliografía académica / técnica consultada: Chapman, P., Clinton, J., Kerber, R., Khabaza, T., Reinartz, T., Shearer, C. y Wirth, R. (2000). CRISP-DM 1.0: Step-by-step data mining guide. SPSS Inc. (completar con bibliografía adicional indicada por la cátedra)
+10. Anexos
+Código / notebooks: A completar por el equipo — enlace al repositorio de GitHub con el notebook de Python. El dataset combinado (CSV) ya está disponible: argentina_clima_multi_1972_2023.csv.
+Gráficos adicionales: Ver notebook: gráficos de evolución de la temperatura, el PBI, el CO2 y las precipitaciones (1972-2023), matriz de correlación entre las cuatro variables, y gráfico de valores reales vs. predichos por la Regresión Lineal y el Random Forest en el período de test (2011-2023).
+Diccionario de datos: year: año (numérica, temporal). temp_anomaly_c: anomalía de temperatura media anual en °C respecto de la base 1991-2020 (numérica, variable objetivo). gdp_rgdpo_usd: PBI real “output-side” en USD, PPP constantes de 2021 (numérica, variable explicativa). co2_emissions_t: emisiones anuales de CO2 en toneladas (numérica, variable explicativa). precipitation_mm: precipitación media anual en mm (numérica, variable explicativa).
+11. Extensión: Análisis por Provincia
+El análisis de las Secciones 1 a 10 trabaja con temperatura, CO2, precipitaciones y PBI de Argentina agregados a nivel país. Esta sección amplía la mirada climática (temperatura, precipitación y viento) a las 24 provincias, para poder describir qué está pasando en cada una y proyectar su tendencia hacia adelante.
+Objetivo de la extensión: Comparar cómo evolucionaron la temperatura, las precipitaciones y el viento en cada provincia argentina, identificar cuáles se están calentando más rápido, y proyectar de forma simple hacia dónde podría ir cada una en los próximos años. El PBI y el CO2 se siguen analizando a nivel nacional (ver Secciones 4 a 8): no existe, al día de hoy, un dataset de PBI/PBG por provincia con series históricas largas y homogéneas entre provincias (ver nota metodológica más abajo), por lo que esa comparación se mantiene a nivel país y la mirada provincial se centra en los indicadores climáticos.
+Nota metodológica — por qué no hay PBI por provincia en esta sección: Se evaluaron las fuentes disponibles de Producto Bruto Geográfico (PBG) por provincia: la serie nacional homogénea más reciente (“VAB por Provincias”, Ministerio de Economía) solo cubre 2018-2021 (4 años, insuficiente para modelar una tendencia); la serie histórica de INDEC llega hasta 2017 y no se actualiza de forma centralizada; y cada provincia publica su propio PBG con metodologías, años base y frecuencias distintas (ej. DEIE-Mendoza, IPEC-Santa Fe, DPE-Buenos Aires, COPADE-Neuquén), lo que impide armar un panel único y comparable entre las 24 provincias sin un trabajo de compilación que excede el alcance de este trabajo.
+Fuente de datos climáticos: NASA POWER (power.larc.nasa.gov) — API pública, sin necesidad de clave, que provee temperatura a 2 metros (T2M), precipitación (PRECTOTCORR) y velocidad de viento a 2 metros (WS2M), todas mensuales, por coordenadas geográficas, con cobertura desde 1981 hasta la actualidad. Se toma un punto representativo por provincia: su ciudad capital (ver tabla de coordenadas a continuación).
+Provincia | Capital / punto de referencia | Latitud | Longitud
+Buenos Aires (CABA) | Ciudad Aut. de Buenos Aires | -34,6037 | -58,3816
+Buenos Aires (provincia) | La Plata | -34,9215 | -57,9545
+Catamarca | San Fernando del Valle de Catamarca | -28,4696 | -65,7852
+Chaco | Resistencia | -27,4512 | -58,9867
+Chubut | Rawson | -43,3002 | -65,1023
+Córdoba | Córdoba | -31,4201 | -64,1888
+Corrientes | Corrientes | -27,4692 | -58,8306
+Entre Ríos | Paraná | -31,7333 | -60,5238
+Formosa | Formosa | -26,1775 | -58,1781
+Jujuy | San Salvador de Jujuy | -24,1858 | -65,2995
+La Pampa | Santa Rosa | -36,6167 | -64,2833
+La Rioja | La Rioja | -29,4131 | -66,8558
+Mendoza | Mendoza | -32,8908 | -68,8272
+Misiones | Posadas | -27,3671 | -55,8961
+Neuquén | Neuquén | -38,9516 | -68,0591
+Río Negro | Viedma | -40,8135 | -62,9967
+Salta | Salta | -24,7859 | -65,4117
+San Juan | San Juan | -31,5375 | -68,5364
+San Luis | San Luis | -33,2950 | -66,3356
+Santa Cruz | Río Gallegos | -51,6230 | -69,2168
+Santa Fe | Santa Fe | -31,6333 | -60,7000
+Santiago del Estero | Santiago del Estero | -27,7834 | -64,2642
+Tierra del Fuego | Ushuaia | -54,8019 | -68,3030
+Tucumán | San Miguel de Tucumán | -26,8083 | -65,2176
+Metodología: Para cada una de las 24 capitales se descargan los tres indicadores (T2M, PRECTOTCORR, WS2M) mensuales entre 1981 y 2023, se calcula el promedio anual de cada uno, y se ajusta una regresión lineal simple (indicador ~ año) para estimar la tendencia de cada provincia en cada variable (°C/década para temperatura, mm/década para precipitación, m/s/década para viento). Con esa misma recta se proyecta, por extrapolación lineal, el valor esperado en 2030 y 2040 para cada indicador — una “futurología” simple y transparente (asume que la tendencia observada se mantiene, no un modelo climático completo). Promediando las 24 provincias se obtiene además una aproximación nacional de precipitación y viento, útil para comparar con los datos ya usados en las Secciones 4 a 8.
+Script de descarga y cálculo: Se generó y adjunta el script provincias_temperatura.py, que automatiza los pasos anteriores para las tres variables (descarga de las 24 series de temperatura, precipitación y viento, cálculo de la tendencia por década, y proyección a 2030/2040) y guarda dos archivos: provincias_clima_anual.csv (serie anual de las tres variables por provincia) y provincias_tendencia.csv (ranking de provincias por velocidad de cambio en cada variable, con sus proyecciones). Se corre una sola vez desde la notebook del grupo (Google Colab o una PC con internet) con: pip install requests pandas numpy && python provincias_temperatura.py.
+Por qué el script no viene ya ejecutado: El endpoint de NASA POWER usado en el script es una API pública, gratuita y ampliamente utilizada en investigación agroclimática, pero el entorno de análisis donde se preparó este informe tiene bloqueado el acceso a ese dominio en particular por su política de red, por lo que no pudo descargarse la serie completa de las 24 provincias desde acá. El script está probado (sintaxis y lógica de cálculo de tendencia verificadas) y listo para correr desde la computadora del grupo, donde el acceso a esa API no tiene ninguna restricción.
+Qué hacer con el resultado: Una vez corrido el script, provincias_tendencia.csv da directamente el ranking pedido (“qué pasa en cada provincia”: de la que más se calienta a la que menos) y las columnas proyeccion_2030 / proyeccion_2040 dan una primera respuesta a “qué podría pasar si la tendencia sigue igual”. Se recomienda volcar ese ranking en un mapa o gráfico de barras por provincia para la presentación final (Sección 5.6).
+Limitaciones de esta extensión: Un solo punto (la capital) no representa toda la superficie de una provincia grande (ej. Buenos Aires, Santa Cruz); la proyección lineal a 2030/2040 es una extrapolación simple, no un modelo climático físico, y no debe leerse como pronóstico oficial; y, como se explicó, esta sección no cruza el indicador climático provincial con el PBI de cada provincia por no existir un dataset confiable para eso.

@@ -1,0 +1,1138 @@
+# Proyecto: Análisis del cambio climático y su relación con el crecimiento económico en Argentina
+
+## 1. Objetivo general
+
+Desarrollar un proyecto completo de análisis de datos sobre la evolución histórica del cambio climático en *Argentina*, estudiando específicamente:
+
+1. La anomalía de la temperatura media anual.
+2. Las precipitaciones.
+3. Las emisiones de CO₂.
+4. Su relación con el crecimiento económico.
+5. Las diferencias y evolución de estos indicadores entre las distintas jurisdicciones de Argentina.
+6. La construcción de modelos que permitan estimar la evolución futura de la temperatura.
+
+El análisis debe estar centrado *exclusivamente en Argentina*.
+
+La dimensión territorial debe contemplar, siempre que los datos disponibles lo permitan:
+
+* Las 23 provincias argentinas.
+* Ciudad Autónoma de Buenos Aires (CABA).
+* Argentina a nivel nacional como agregado.
+
+*No utilizar otros países como parte del conjunto de datos del análisis.*
+
+Los datos regionales, sudamericanos, latinoamericanos o mundiales pueden utilizarse únicamente como contexto metodológico o para explicar una fuente, pero nunca deben incorporarse como observaciones al análisis estadístico o a los modelos.
+
+---
+
+# 2. Objetivos específicos
+
+El proyecto debe responder, mediante datos y análisis reproducible, preguntas como:
+
+### Nivel nacional
+
+* ¿Cómo evolucionó la temperatura media/anomalía térmica de Argentina a lo largo del período estudiado?
+* ¿Cómo evolucionaron las precipitaciones?
+* ¿Cómo evolucionaron las emisiones de CO₂?
+* ¿Cómo evolucionó el crecimiento del PBI?
+* ¿Existe una asociación estadística entre las variables climáticas y económicas?
+
+### Nivel provincial
+
+* ¿Cómo evolucionó la temperatura en cada provincia?
+* ¿Qué diferencias existen entre provincias?
+* ¿Cómo evolucionaron las precipitaciones en las distintas provincias?
+* ¿Qué provincias presentan mayores cambios o tendencias?
+* ¿Existen diferencias territoriales importantes?
+* ¿Cómo se relacionan los indicadores climáticos con la actividad económica provincial cuando existen datos de PBG?
+* ¿Qué provincias poseen datos suficientes para construir modelos individuales?
+
+No asumir que todas las preguntas pueden responderse si los datos no tienen resolución provincial suficiente.
+
+---
+
+# 3. Jurisdicciones
+
+Utilizar como referencia territorial:
+
+## Provincias
+
+* Buenos Aires
+* Catamarca
+* Chaco
+* Chubut
+* Córdoba
+* Corrientes
+* Entre Ríos
+* Formosa
+* Jujuy
+* La Pampa
+* La Rioja
+* Mendoza
+* Misiones
+* Neuquén
+* Río Negro
+* Salta
+* San Juan
+* San Luis
+* Santa Cruz
+* Santa Fe
+* Santiago del Estero
+* Tierra del Fuego, Antártida e Islas del Atlántico Sur
+* Tucumán
+
+## Ciudad Autónoma de Buenos Aires
+
+* CABA
+
+Además, mantener una categoría:
+
+* Argentina
+
+para los datos nacionales.
+
+IMPORTANTE:
+
+No confundir provincias con regiones geográficas.
+
+Si una fuente utiliza regiones como:
+
+* NOA
+* NEA
+* Cuyo
+* Pampeana
+* Patagonia
+
+no reemplazar automáticamente las provincias por esas regiones.
+
+Las regiones pueden utilizarse como agrupación secundaria para visualización o contexto, pero la unidad territorial principal debe ser la provincia cuando existan datos disponibles.
+
+---
+
+# 4. Fuentes de datos
+
+Buscar fuentes confiables y preferentemente oficiales.
+
+Prioridad:
+
+1. Organismos oficiales de Argentina.
+2. INDEC.
+3. Servicio Meteorológico Nacional.
+4. Secretaría/Ministerio de Ambiente u organismos ambientales oficiales.
+5. Datos oficiales provinciales.
+6. Banco Mundial.
+7. CEPAL.
+8. Climate Change Knowledge Portal.
+9. Our World in Data.
+10. Otras fuentes académicas o institucionales confiables.
+
+Antes de utilizar cualquier fuente, documentar:
+
+* nombre de la fuente
+* URL
+* institución
+* variable
+* unidad
+* cobertura temporal
+* cobertura geográfica
+* metodología
+* frecuencia
+* fecha de consulta
+* limitaciones
+
+Crear un archivo:
+
+data/sources.csv
+
+con esta información.
+
+---
+
+# 5. Regla fundamental sobre los datos geográficos
+
+Antes de incorporar cualquier dataset, verificar:
+
+* país
+* provincia/jurisdicción
+* año
+* unidad
+* frecuencia
+* cobertura temporal
+* metodología
+* valores faltantes
+
+Si un dataset contiene múltiples países:
+
+filtrar exclusivamente Argentina.
+
+Por ejemplo:
+
+python
+df = df[df["country_code"] == "ARG"]
+
+
+o utilizar el equivalente correspondiente a la fuente.
+
+Si contiene múltiples provincias:
+
+conservar exclusivamente las jurisdicciones argentinas válidas.
+
+Nunca incorporar:
+
+* datos de otros países
+* promedios regionales como si fueran datos argentinos
+* datos de Sudamérica
+* datos de Latinoamérica
+* datos mundiales
+
+como observaciones del análisis.
+
+---
+
+# 6. Variables principales
+
+Construir un dataset principal con una estructura similar a:
+
+text
+año
+jurisdiccion
+tipo_jurisdiccion
+anomalía_temperatura
+precipitaciones
+emisiones_co2
+pbi_crecimiento
+pbg
+
+
+Donde:
+
+* año: año de observación.
+* jurisdiccion: provincia, CABA o Argentina.
+* tipo_jurisdiccion: provincia / CABA / nacional.
+* anomalía_temperatura: anomalía de temperatura media anual.
+* precipitaciones: precipitación anual.
+* emisiones_co2: emisiones de CO₂.
+* pbi_crecimiento: crecimiento anual real del PBI.
+* pbg: Producto Bruto Geográfico provincial, cuando esté disponible.
+
+No es obligatorio que todas las variables existan para todas las jurisdicciones.
+
+Documentar explícitamente las diferencias de cobertura.
+
+---
+
+# 7. PBI y PBG
+
+A nivel nacional utilizar preferentemente:
+
+*GDP growth (annual %)*
+
+o su equivalente oficial argentino.
+
+Evitar confundir:
+
+* PBI nominal
+* PBI real
+* PBI per cápita
+* crecimiento del PBI
+
+La variable principal para crecimiento económico debe ser el *crecimiento real anual*.
+
+A nivel provincial, buscar:
+
+*Producto Bruto Geográfico (PBG)*
+
+cuando existan datos comparables.
+
+Si no existe PBG comparable para todas las provincias:
+
+* no inventar datos
+* no imputar automáticamente
+* no sustituirlo arbitrariamente por otra variable
+* documentar qué provincias tienen datos
+* realizar análisis provincial económico solamente sobre las jurisdicciones con información válida
+
+---
+
+# 8. Temperatura
+
+La variable principal será:
+
+*anomalía de temperatura media anual*
+
+Siempre documentar:
+
+* unidad
+* período de referencia/base
+* resolución espacial
+* resolución temporal
+* metodología utilizada
+
+No mezclar anomalías calculadas con diferentes períodos base sin documentarlo.
+
+Si los datos disponibles permiten obtener temperatura/anomalía por provincia, construir series provinciales.
+
+Si solamente existen datos nacionales, realizar el análisis nacional y dejar explícitamente indicada la limitación.
+
+---
+
+# 9. Precipitaciones
+
+Analizar:
+
+* precipitación anual
+* tendencia temporal
+* variabilidad
+* diferencias provinciales
+
+Cuando sea posible, utilizar milímetros por año.
+
+Analizar tanto:
+
+* evolución absoluta
+* anomalías de precipitación
+
+si la fuente proporciona información suficiente.
+
+---
+
+# 10. Emisiones de CO₂
+
+Analizar la evolución de las emisiones de CO₂.
+
+Diferenciar claramente entre:
+
+* emisiones totales
+* emisiones per cápita
+* emisiones territoriales
+* emisiones relacionadas con energía
+* otras metodologías
+
+No mezclar metodologías sin documentarlo.
+
+A nivel provincial, buscar datos provinciales de emisiones si existen.
+
+Si solo existen datos nacionales comparables, utilizar CO₂ nacional exclusivamente en el modelo nacional y explicar que no existe una variable provincial equivalente.
+
+---
+
+# 11. Estructura del proyecto
+
+Crear:
+
+text
+argentina-clima-pbi/
+│
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── sources.csv
+│
+├── notebooks/
+│   └── analisis_argentina.ipynb
+│
+├── src/
+│   ├── __init__.py
+│   ├── data_loader.py
+│   ├── preprocessing.py
+│   ├── analysis.py
+│   ├── visualization.py
+│   └── modeling.py
+│
+├── outputs/
+│   ├── figures/
+│   ├── tables/
+│   └── models/
+│
+├── main.py
+├── requirements.txt
+└── README.md
+
+
+---
+
+# 12. Tecnologías
+
+Utilizar Python.
+
+Bibliotecas recomendadas:
+
+text
+pandas
+numpy
+matplotlib
+seaborn
+scipy
+scikit-learn
+statsmodels
+geopandas
+plotly
+jupyter
+openpyxl
+requests
+
+
+Agregar otras solamente si son necesarias.
+
+---
+
+# 13. Flujo de trabajo obligatorio
+
+Trabajar de manera incremental.
+
+No intentar construir todo el proyecto de una sola vez.
+
+Seguir este orden:
+
+## Etapa 1 — Inspección
+
+Primero:
+
+* inspeccionar el entorno
+* revisar archivos existentes
+* revisar estructura del proyecto
+* detectar datasets existentes
+* detectar dependencias instaladas
+
+No eliminar archivos existentes sin motivo.
+
+---
+
+## Etapa 2 — Estructura
+
+Crear la estructura del proyecto.
+
+Crear:
+
+* carpetas
+* módulos
+* requirements.txt
+* README.md
+
+Todavía no inventar datos.
+
+---
+
+## Etapa 3 — Investigación y adquisición de datos
+
+Buscar las fuentes necesarias.
+
+Para cada variable determinar:
+
+* fuente
+* cobertura temporal
+* resolución geográfica
+* unidades
+* metodología
+
+Priorizar datos provinciales.
+
+Si una variable solo existe a nivel nacional, conservarla a nivel nacional y documentarlo.
+
+---
+
+## Etapa 4 — Construcción del dataset
+
+Crear datasets:
+
+### Dataset nacional
+
+text
+año
+temperatura
+precipitaciones
+co2
+crecimiento_pbi
+
+
+### Dataset provincial
+
+Cuando los datos lo permitan:
+
+text
+año
+provincia
+temperatura
+precipitaciones
+co2
+pbg
+
+
+No forzar que todas las variables tengan la misma granularidad si las fuentes no lo permiten.
+
+---
+
+# 14. Validación de datos
+
+Implementar controles automáticos para detectar:
+
+* años duplicados
+* provincias duplicadas
+* años faltantes
+* provincias faltantes
+* valores nulos
+* valores negativos imposibles
+* unidades inconsistentes
+* cambios de metodología
+* outliers sospechosos
+* duplicaciones después de realizar joins
+
+Comprobar especialmente que un merge no multiplique accidentalmente las observaciones.
+
+Generar un informe de calidad.
+
+---
+
+# 15. Análisis exploratorio
+
+Realizar primero un análisis nacional.
+
+Después realizar análisis provincial.
+
+## Nacional
+
+Gráficos:
+
+1. temperatura vs año
+2. precipitaciones vs año
+3. CO₂ vs año
+4. crecimiento del PBI vs año
+5. todas las variables normalizadas para comparación de tendencias
+
+---
+
+# 16. Análisis provincial
+
+Generar gráficos comparativos.
+
+Por ejemplo:
+
+* evolución de temperatura por provincia
+* evolución de precipitaciones por provincia
+* ranking descriptivo de cambio acumulado
+
+IMPORTANTE:
+
+Los rankings pueden utilizarse como ordenamiento descriptivo de una variable cuantitativa.
+
+No convertirlos en rankings de "mejor" o "peor" provincia.
+
+También generar:
+
+* mapas coropléticos
+* mapas de anomalía térmica
+* mapas de precipitaciones
+* mapas de tendencias
+
+si existe geometría provincial compatible.
+
+Utilizar límites geográficos confiables.
+
+---
+
+# 17. Regiones argentinas
+
+Como análisis secundario se pueden agrupar provincias por región:
+
+* NOA
+* NEA
+* Cuyo
+* Pampeana
+* Patagonia
+
+Pero siempre conservar la provincia original.
+
+Por ejemplo:
+
+text
+provincia = Mendoza
+region = Cuyo
+
+
+La región nunca debe reemplazar a la provincia en el dataset principal.
+
+---
+
+# 18. Estadística descriptiva
+
+Calcular:
+
+* media
+* mediana
+* desviación estándar
+* mínimo
+* máximo
+* percentiles
+* rango
+* coeficiente de variación cuando corresponda
+
+Hacerlo:
+
+* a nivel nacional
+* por provincia
+* por período
+
+---
+
+# 19. Tendencias
+
+Estimar tendencias temporales para:
+
+* temperatura
+* precipitaciones
+* CO₂
+* PBI/PBG
+
+Utilizar métodos estadísticos apropiados.
+
+Por ejemplo:
+
+* regresión lineal temporal
+* correlación temporal
+* Mann-Kendall si resulta apropiado
+
+Reportar:
+
+* pendiente
+* significancia estadística
+* intervalo de confianza cuando corresponda
+
+No afirmar causalidad a partir de una tendencia.
+
+---
+
+# 20. Relación clima-economía
+
+Analizar:
+
+* temperatura vs crecimiento económico
+* precipitaciones vs crecimiento económico
+* CO₂ vs crecimiento económico
+
+Utilizar:
+
+* Pearson
+* Spearman
+
+cuando sean apropiados.
+
+Realizar análisis:
+
+### Nacional
+
+Argentina completa.
+
+### Provincial
+
+Solo donde exista información compatible.
+
+Evitar mezclar directamente datos nacionales con datos provinciales en una misma correlación.
+
+---
+
+# 21. Causalidad
+
+No afirmar:
+
+> "El aumento de temperatura provocó una reducción del PBI."
+
+a partir de correlaciones.
+
+Utilizar expresiones como:
+
+> "Se observa una asociación..."
+
+> "Existe una correlación..."
+
+> "Los resultados son compatibles con..."
+
+Explicar claramente que correlación no implica causalidad.
+
+---
+
+# 22. Modelo predictivo
+
+El objetivo principal será estimar:
+
+text
+anomalía_temperatura
+
+
+a partir de variables disponibles.
+
+Modelos iniciales:
+
+### Modelo 1
+
+Regresión lineal múltiple.
+
+### Modelo 2
+
+Random Forest Regressor.
+
+Evaluar también otros modelos solamente si existe justificación metodológica.
+
+---
+
+# 23. Variables predictoras
+
+Evaluar como posibles variables:
+
+text
+año
+precipitaciones
+emisiones_co2
+crecimiento_pbi
+
+
+Para el análisis provincial:
+
+text
+provincia
+año
+precipitaciones
+co2
+pbg
+
+
+La inclusión de provincia debe realizarse mediante una codificación adecuada, no asignando números arbitrarios.
+
+Evaluar también si año introduce una tendencia temporal que pueda afectar la interpretación.
+
+---
+
+# 24. División temporal
+
+NO utilizar una división aleatoria tradicional para evaluar modelos de series temporales.
+
+Utilizar una división cronológica.
+
+Ejemplo:
+
+text
+Entrenamiento: primeros años
+Prueba: años más recientes
+
+
+También considerar TimeSeriesSplit cuando corresponda.
+
+Nunca utilizar información futura para entrenar el modelo.
+
+---
+
+# 25. Métricas
+
+Evaluar:
+
+* MAE
+* RMSE
+* R²
+
+Comparar los modelos mediante las métricas.
+
+No declarar automáticamente un modelo como "mejor" únicamente por una métrica sin analizar el contexto.
+
+Mostrar los resultados de manera transparente.
+
+---
+
+# 26. Validación
+
+Comprobar:
+
+* overfitting
+* diferencia entre entrenamiento y prueba
+* estabilidad temporal
+* errores residuales
+* importancia de variables
+
+Para Random Forest:
+
+* feature importance
+* permutation importance si resulta conveniente
+
+Para regresión:
+
+* coeficientes
+* intervalos de confianza
+* significancia
+* diagnóstico de residuos
+
+---
+
+# 27. Predicción futura
+
+Esta parte debe tratarse con especial cuidado.
+
+No inventar valores futuros de:
+
+* precipitaciones
+* CO₂
+* PBI
+* PBG
+
+Si se quiere estimar temperatura futura, se deben definir explícitamente escenarios para las variables predictoras.
+
+Por ejemplo:
+
+### Escenario A
+
+Continuidad de tendencia histórica.
+
+### Escenario B
+
+Escenario de cambio climático basado en una fuente científica externa.
+
+### Escenario C
+
+Otro escenario justificado.
+
+Cada escenario debe indicar:
+
+* fuente
+* supuestos
+* período
+* incertidumbre
+* limitaciones
+
+Diferenciar claramente:
+
+*datos observados*
+
+de
+
+*proyecciones científicas*
+
+de
+
+*predicciones del modelo desarrollado en este proyecto*.
+
+---
+
+# 28. Modelo nacional y provincial
+
+Intentar construir dos niveles de análisis:
+
+## Modelo nacional
+
+Utilizando las series de Argentina.
+
+## Modelo provincial
+
+Cuando la cantidad y calidad de datos lo permitan.
+
+No crear modelos provinciales para provincias que no tengan suficientes observaciones.
+
+Si existen muy pocos datos para una provincia, indicarlo como limitación.
+
+También evaluar un modelo conjunto de datos provinciales si estadísticamente resulta apropiado.
+
+---
+
+# 29. Comparación territorial
+
+Generar análisis para identificar patrones espaciales.
+
+Por ejemplo:
+
+* provincias con mayor tendencia de aumento de temperatura
+* provincias con mayor variabilidad de precipitaciones
+* diferencias entre regiones
+* relación entre actividad económica y variables climáticas
+
+Presentar estos resultados como *descripción estadística*, no como valoración de las provincias.
+
+---
+
+# 30. Visualizaciones
+
+Todas las visualizaciones deben tener:
+
+* título
+* eje X
+* eje Y
+* unidades
+* fuente
+* leyenda cuando corresponda
+
+Crear gráficos en:
+
+text
+outputs/figures/
+
+
+Ejemplos:
+
+text
+temperatura_argentina.png
+precipitaciones_argentina.png
+co2_argentina.png
+pbi_argentina.png
+
+temperatura_provincias.png
+precipitaciones_provincias.png
+
+mapa_temperatura.png
+mapa_precipitaciones.png
+
+correlaciones_argentina.png
+correlaciones_provincias.png
+
+prediccion_temperatura.png
+
+
+---
+
+# 31. README
+
+El README debe explicar:
+
+* objetivo
+* preguntas de investigación
+* fuentes
+* variables
+* metodología
+* estructura del proyecto
+* instalación
+* ejecución
+* resultados principales
+* limitaciones
+* cómo reproducir el análisis
+
+---
+
+# 32. Reproducibilidad
+
+El proyecto debe poder ejecutarse nuevamente desde cero.
+
+Evitar:
+
+* valores escritos manualmente
+* resultados inventados
+* datos generados artificialmente sin indicarlo
+* URLs falsas
+* coeficientes inventados
+* métricas inventadas
+* predicciones inventadas
+
+Todo resultado debe provenir de los datos procesados y del código.
+
+---
+
+# 33. Manejo de datos faltantes
+
+No rellenar automáticamente datos faltantes sin justificarlo.
+
+Antes de imputar:
+
+1. analizar el patrón de faltantes
+2. determinar si la imputación es metodológicamente apropiada
+3. justificar el método
+4. comparar resultados con/sin imputación cuando sea necesario
+
+Si la imputación puede distorsionar la conclusión, conservar el faltante.
+
+---
+
+# 34. Control de calidad geográfico
+
+Implementar una validación específica que compruebe que las jurisdicciones sean exclusivamente argentinas.
+
+Por ejemplo, crear un listado oficial:
+
+python
+PROVINCIAS_ARGENTINA = [
+    ...
+]
+
+
+y validar:
+
+python
+set(df["provincia"].dropna().unique()) <= set(PROVINCIAS_ARGENTINA)
+
+
+Además, verificar que CABA esté correctamente diferenciada de la provincia de Buenos Aires.
+
+No confundir:
+
+* Ciudad Autónoma de Buenos Aires
+* Provincia de Buenos Aires
+
+Son jurisdicciones diferentes.
+
+---
+
+# 35. Control de calidad temporal
+
+Verificar:
+
+* año mínimo
+* año máximo
+* continuidad
+* años faltantes
+* cambios en cobertura
+
+Para cada variable informar:
+
+text
+variable
+primer año
+último año
+cantidad de observaciones
+cantidad de faltantes
+cantidad de provincias
+
+
+---
+
+# 36. Conclusiones
+
+Las conclusiones deben responder exclusivamente las preguntas planteadas.
+
+Separar:
+
+### Hallazgos nacionales
+
+### Hallazgos provinciales
+
+### Relación clima-economía
+
+### Resultados del modelo
+
+### Proyecciones
+
+### Limitaciones
+
+No realizar afirmaciones que excedan los datos.
+
+---
+
+# 37. Reglas fundamentales para OpenCode
+
+Estas reglas son obligatorias:
+
+1. *Todo el análisis corresponde exclusivamente a Argentina.*
+
+2. *La dimensión provincial es obligatoria siempre que existan datos disponibles.*
+
+3. Considerar las *23 provincias + CABA*.
+
+4. Argentina debe aparecer como agregado nacional separado de las provincias.
+
+5. Nunca utilizar otro país como observación del análisis.
+
+6. Nunca inventar datos faltantes.
+
+7. Nunca inventar fuentes.
+
+8. Nunca inventar resultados.
+
+9. Nunca inventar métricas.
+
+10. Nunca inventar predicciones.
+
+11. Nunca afirmar causalidad únicamente a partir de correlaciones.
+
+12. Documentar las limitaciones de cada fuente.
+
+13. Verificar unidades antes de combinar datasets.
+
+14. Verificar períodos antes de combinar datasets.
+
+15. Verificar resolución geográfica antes de combinar datasets.
+
+16. No mezclar datos nacionales con provinciales sin una justificación metodológica.
+
+17. No convertir regiones argentinas en sustitutos de provincias.
+
+18. Diferenciar siempre CABA de Provincia de Buenos Aires.
+
+19. Si una variable solamente está disponible a nivel nacional, utilizarla solamente en el análisis nacional y explicarlo.
+
+20. Si una fuente provincial solamente cubre algunas provincias, analizar solamente las provincias disponibles y documentarlo.
+
+21. No eliminar observaciones simplemente para obtener un dataset más completo.
+
+22. Toda transformación debe quedar registrada en el código.
+
+23. Todo gráfico debe indicar fuente y unidades.
+
+24. Toda conclusión debe poder rastrearse hasta un resultado concreto.
+
+25. No avanzar a la siguiente etapa hasta comprobar que la etapa anterior funciona.
+
+---
+
+# 38. Forma de trabajo
+
+Trabajar en etapas.
+
+Después de cada etapa:
+
+1. ejecutar el código
+2. comprobar resultados
+3. detectar errores
+4. corregirlos
+5. comprobar nuevamente
+6. documentar lo realizado
+7. recién entonces continuar
+
+Si no se puede acceder automáticamente a una fuente:
+
+* no inventar los datos
+* indicar exactamente qué fuente falta
+* preparar el código para cargarla posteriormente
+* continuar con las partes que sí puedan reproducirse
+
+Al finalizar cada etapa, mostrar brevemente:
+
+text
+ESTADO
+✓ Completado
+⚠️ Advertencias
+✗ Problemas pendientes
+→ Próximo paso
+
+
+---
+
+# 39. Idioma
+
+Todo el proyecto debe estar en español:
+
+* código
+* comentarios
+* nombres de variables
+* documentación
+* gráficos
+* README
+* explicaciones
+
+Excepto nombres propios de bibliotecas, APIs, fuentes o términos técnicos que deban mantenerse en su forma original.
+
+---
+
+# 40. Resultado final esperado
+
+El proyecto debe terminar con:
+
+* dataset nacional limpio
+* dataset provincial limpio cuando sea posible
+* documentación de fuentes
+* análisis exploratorio
+* análisis estadístico
+* análisis territorial
+* visualizaciones
+* mapas
+* análisis de correlaciones
+* modelos predictivos
+* evaluación temporal
+* escenarios de proyección
+* conclusiones
+* limitaciones
+* README reproducible
+
+El objetivo final es obtener un proyecto académico reproducible que permita estudiar *cómo evolucionaron las variables climáticas en Argentina, cómo difieren entre sus provincias y cómo se relacionan con la evolución económica*, además de evaluar modelos para estimar la evolución futura de la temperatura bajo supuestos explícitos.
+
+*No simplificar el problema eliminando la dimensión provincial cuando existan datos disponibles.*

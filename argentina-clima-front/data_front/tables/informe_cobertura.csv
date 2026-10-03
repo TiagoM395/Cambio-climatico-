@@ -1,0 +1,12 @@
+dataset,variable,primer_año,ultimo_año,observaciones,faltantes,jurisdicciones_con_datos
+nacional,anomalia_temperatura,1961,2025,65,0,1
+nacional,anomalia_precipitacion_pct,1961,2025,65,0,1
+nacional,emisiones_gei_co2eq,2010,2022,13,52,1
+nacional,emisiones_co2_fosil,1961,2024,64,1,1
+nacional,pbi_crecimiento_pct,1961,2025,65,0,1
+provincial,temperatura_media_c,1981,2025,1080,0,24
+provincial,anomalia_temperatura,1981,2025,1080,0,24
+provincial,precipitaciones_mm,2010,2024,360,720,24
+provincial,emisiones_gei_co2eq,2010,2022,312,768,24
+provincial,pbg,2004,2024,504,576,24
+provincial,pbg_preliminar,2004,2024,504,576,24

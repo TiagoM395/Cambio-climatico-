@@ -1,0 +1,21 @@
+prueba,detalle,coeficiente,p_valor,n
+1. Corrección Holm (6 pruebas),Año seco → Producción agropecuaria,-2.9759544818004984,0.6231977774535055,456
+1. Corrección Holm (6 pruebas),Temperatura (+1 °C) → Producción agropecuaria,-5.636073344983882,0.1554120918793706,456
+1. Corrección Holm (6 pruebas),Lluvia (+1 %) → Producción agropecuaria,0.04585305990580192,0.6963952373040136,456
+1. Corrección Holm (6 pruebas),Año seco → Economía total de la provincia,-0.17761432962044776,1.0,456
+1. Corrección Holm (6 pruebas),Temperatura (+1 °C) → Economía total de la provincia,-0.9851582438096526,0.6963952373040136,456
+1. Corrección Holm (6 pruebas),Lluvia (+1 %) → Economía total de la provincia,0.004023065866254044,1.0,456
+2. Sacar una provincia (peor caso),p más alto al sacar Santiago del Estero,-4.495875575074618,0.05711724636443813,456
+2. Sacar una provincia (mejor caso),efecto más fuerte al sacar Corrientes,-6.5094168104904275,0.012360564963976459,456
+"2. Sacar una provincia (cuántas mantienen p<0,05)",22 de 24,-5.5549051935270946,0.03115161112106779,456
+3. Sin valores extremos,crecimiento agro recortado al 5 %-95 %,-3.959669443097962,0.04502974871898253,456
+4. Permutación (azar puro),2000 mezclas; veces que el azar iguala el efecto: 6,-5.636073344983882,0.0034982508745627187,456
+5. Placebo (sector sin relación con el clima),Construcción,-2.248930251144278,0.11128931406050752,456
+5. Placebo (sector sin relación con el clima),Comercio,1.4626981388909848,0.250635582695781,456
+5. Placebo (sector sin relación con el clima),Transporte,-0.276819058144275,0.6944561661301818,456
+5. Placebo (sector sin relación con el clima),Intermediación financiera,-0.3869036815351342,0.38758376474562095,456
+6. Agroindustria,Alimentos y bebidas (depende del campo),-1.1008607131629522,0.031343773696767774,456
+7. Efecto rezagado,temperatura del año anterior → campo,-0.8921067730143031,0.7908018122044826,432
+8. Año muy cálido,25 % más cálido de cada provincia → campo,-2.9688497782109318,0.06397588067604079,456
+9. Dosis-respuesta (economía total),calor × peso del campo: ¿pega más donde el campo pesa más?,-0.4267351681998333,1.1459354547857151e-06,456
+9. Dosis-respuesta (por provincia),"peso del campo vs. pérdida en años secos (Spearman, 24 provincias)",-0.3504347826086956,0.0931821716598171,24

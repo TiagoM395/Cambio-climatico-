@@ -1,0 +1,157 @@
+Sí. Para un **proyecto de Ciencia de Datos**, conviene que las preguntas no sean simplemente “¿el cambio climático afecta al PBI?”, sino preguntas que puedas **responder con datos, gráficos, correlaciones, modelos y comparaciones**.
+
+Si querés trabajar con **Argentina + PBI per cápita + cambio climático**, estas son buenas preguntas de análisis:
+
+### 1. Relación principal
+
+**¿Existe una relación entre la evolución del PBI per cápita de Argentina y los indicadores de cambio climático a lo largo del tiempo?**
+
+Podrías analizar:
+
+* PBI per cápita
+* temperatura media
+* precipitaciones
+* eventos climáticos extremos
+* emisiones de CO₂
+
+---
+
+### 2. Crecimiento económico y cambio climático
+
+**¿Los períodos de mayor crecimiento del PBI per cápita coinciden con un aumento de determinados indicadores de presión ambiental o climática?**
+
+Acá podrías comparar año por año y buscar patrones.
+
+---
+
+### 3. Cambio climático y producción económica
+
+**¿Los años con temperaturas o precipitaciones anómalas presentan variaciones diferentes en el PBI per cápita respecto de los años normales?**
+
+Esta es interesante porque ya no solamente preguntás si dos variables “se relacionan”, sino si los **eventos climáticos anormales** tienen algún comportamiento económico asociado.
+
+---
+
+### 4. Impacto de eventos climáticos extremos
+
+**¿Existe una relación entre la ocurrencia de sequías, inundaciones u otros eventos climáticos extremos y la evolución del PBI per cápita argentino?**
+
+Podrías construir una variable:
+
+> Año con evento climático extremo = 1
+> Año sin evento climático extremo = 0
+
+Y comparar ambos grupos.
+
+---
+
+### 5. Sequías y economía
+
+**¿Qué relación existe entre las sequías y el PBI per cápita de Argentina?**
+
+Esta puede ser especialmente interesante porque permite incorporar:
+
+* producción agropecuaria
+* exportaciones
+* empleo
+* PBI
+* PBI per cápita
+* precipitaciones
+
+Y después analizar si los años de sequía presentan diferencias respecto de otros años.
+
+---
+
+### 6. Temperatura
+
+**¿Cómo se relaciona la evolución de la temperatura media de Argentina con el PBI per cápita?**
+
+Podrías estudiar:
+
+> temperatura → variación → PBI per cápita
+
+y determinar si existe correlación, sin asumir previamente que existe causalidad.
+
+---
+
+### 7. Diferencias entre provincias
+
+Si querés llevar el proyecto a un nivel más interesante:
+
+**¿Las provincias argentinas presentan diferentes relaciones entre sus condiciones climáticas y su PBI per cápita?**
+
+Esto te permitiría trabajar con un **dataset provincial**.
+
+Por ejemplo:
+
+| Provincia    | PBI per cápita | Temperatura | Precipitaciones | Eventos extremos |
+| ------------ | -------------: | ----------: | --------------: | ---------------: |
+| Buenos Aires |            ... |         ... |             ... |              ... |
+| Córdoba      |            ... |         ... |             ... |              ... |
+| Santa Fe     |            ... |         ... |             ... |              ... |
+| Mendoza      |            ... |         ... |             ... |              ... |
+
+Y después hacer mapas y clustering.
+
+---
+
+### 8. Una pregunta muy buena para Ciencia de Datos
+
+**¿Qué variables climáticas explican mejor las diferencias observadas en el PBI per cápita entre las provincias argentinas?**
+
+Esta ya permite utilizar:
+
+* correlación
+* regresión lineal
+* regresión múltiple
+* importancia de variables
+* visualizaciones
+* análisis de outliers
+
+---
+
+### 9. Otra posibilidad
+
+**¿Las provincias con mayor exposición a eventos climáticos extremos presentan menores niveles de PBI per cápita?**
+
+Esto te permitiría construir un **índice de exposición climática** y compararlo con el PBI per cápita.
+
+---
+
+### 10. Pregunta de predicción
+
+Si querés incorporar Machine Learning:
+
+**¿Es posible predecir el PBI per cápita de una provincia utilizando variables climáticas y económicas?**
+
+Variables posibles:
+
+* temperatura
+* precipitaciones
+* frecuencia de eventos extremos
+* producción agropecuaria
+* empleo
+* población
+* PBI histórico
+
+---
+
+## Las 3 que yo usaría como eje del proyecto
+
+Sin decir de antemano qué resultado vas a encontrar, podrías plantearlo así:
+
+### Pregunta principal
+
+**¿Qué relación existe entre las condiciones climáticas y la evolución del PBI per cápita en Argentina?**
+
+### Preguntas secundarias
+
+**1. ¿Los años con mayor frecuencia de eventos climáticos extremos presentan diferencias en la evolución del PBI per cápita?**
+
+**2. ¿Qué variables climáticas presentan mayor asociación con el PBI per cápita?**
+
+**3. ¿Esta relación cambia entre las distintas provincias argentinas?**
+
+Esto te da un proyecto bastante completo porque podés hacer **análisis temporal + análisis estadístico + análisis provincial + visualización + modelo predictivo**.
+
+Y algo importante: **no necesitás que el proyecto demuestre que “el cambio climático causa una caída del PBI”**. Desde Ciencia de Datos es mucho más sólido plantear una pregunta abierta y dejar que los datos indiquen qué relación existe.

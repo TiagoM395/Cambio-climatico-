@@ -1,0 +1,45 @@
+PLAN DE PROYECTO
+Modelo genérico — aplicable a cualquiera de las 4 ideas evaluadas
+1. Datos Generales
+Proyecto: Cambio climático en Argentina y su relación con el crecimiento económico (PBI)
+Autor/a: Rodrigo Bulggiani, Elias Campos, Romina Guzmán, Tiago Maidana
+Fecha de inicio: 14/09/2026
+Fecha de entrega: 30/11/2026
+Duración estimada: 11 semanas
+2. Alcance del Proyecto
+Incluye: Análisis exploratorio de tres indicadores de cambio climático en Argentina — anomalía de temperatura media anual, precipitaciones y emisiones de CO2 — y de su relación con el PBI a lo largo del tiempo; construcción de un modelo predictivo para estimar la evolución futura de la temperatura en base a esas variables; extensión del análisis climático (temperatura, precipitación y viento) a las 24 provincias, con ranking de velocidad de cambio y proyección simple por provincia, manteniendo el PBI y el CO2 a nivel nacional
+No incluye: Comparación exhaustiva con todos los demás países del dataset (se usarán solo como referencia puntual si hace falta); recomendaciones de política pública o de mitigación; incorporación de fuentes de datos externas a las utilizadas
+Entregable final: Informe escrito + notebook con el análisis y el modelo + presentación de 10-15 minutos
+3. Cronograma Detallado
+Distribución semanal de tareas siguiendo las fases de CRISP-DM. Ajustar semanas según la fecha de entrega real.
+Semana | Fase CRISP-DM | Tareas | Entregable parcial | Responsable
+1 | Business Understanding | Definir problema, objetivos y alcance del proyecto | Documento de objetivos | Grupo completo
+2 | Data Understanding | Buscar y descargar el dataset; primer diagnóstico de columnas y calidad | Reporte de EDA inicial | Grupo completo
+3 | Data Understanding | Análisis exploratorio completo (distribuciones, correlaciones, outliers) | Notebook de EDA | Rodrigo Bulggiani
+4-5 | Data Preparation | Limpieza, tratamiento de nulos/outliers, construcción de variables nuevas | Dataset limpio y documentado | Elias Campos
+6 | Data Preparation | Integración de fuentes (si aplica) y formato final para modelado | Dataset final (train/test) | Elias Campos
+7-8 | Modeling | Entrenar modelo(s) baseline y modelo(s) más complejos; ajustar hiperparámetros | Modelos entrenados + métricas | Romina Guzmán
+9 | Evaluation | Comparar métricas contra el objetivo, analizar limitaciones | Reporte de evaluación | Romina Guzmán
+10 | Deployment | Armar informe final, gráficos/dashboard y preparar la presentación | Informe final + presentación | Tiago Maidana
+11 | Deployment | Revisión final, ajustes y ensayo de la defensa/presentación | Entrega definitiva | Grupo completo
+4. Recursos y Herramientas
+Lenguaje / herramientas de análisis: Python (pandas, numpy, scikit-learn, statsmodels), Jupyter Notebook / Google Colab, y Orange Data Mining (indicado por la cátedra) para partes complementarias del flujo de trabajo
+Herramientas de visualización: Matplotlib, Seaborn, Plotly
+Fuente de datos: Our World in Data — Annual Temperature Anomalies (Copernicus C3S/ERA5), Average Precipitation per Year (Copernicus C3S/ERA5), Annual CO2 Emissions (Global Carbon Project) y GDP (Penn World Table, PBI real en USD PPP 2021), todos filtrados por Argentina y combinados por año. Período utilizado: 1972-2023 (52 años). Para la extensión por provincia (Sección 11 del Trabajo Integrador): NASA POWER (temperatura, precipitación y viento por coordenadas, desde 1981).
+Otros recursos: Google Colab, bibliografía de la cátedra (Técnicas de Ciencia de Datos, Instituto 57)
+5. Riesgos y Mitigación
+Riesgos genéricos de este tipo de proyecto y cómo se piensan mitigar. Completar o ajustar según el proyecto elegido.
+Riesgo | Probabilidad | Impacto | Mitigación
+Dataset con datos faltantes o de baja calidad | Media | Alto | Definir criterios de limpieza desde etapa temprana; tener fuente alternativa de respaldo
+Retrasos en la etapa de obtención/integración de datos | Media | Alto | Empezar la búsqueda de datos en la semana 1, no esperar a tener el objetivo 100% cerrado
+El modelo no logra buen desempeño | Media | Medio | Tener un baseline simple desde el principio y ajustar expectativas de las métricas de éxito
+Alcance demasiado ambicioso para el tiempo disponible | Alta | Alto | Priorizar un MVP (versión mínima viable) y dejar mejoras como trabajo futuro
+Dependencia de una sola persona para tareas clave | Baja | Medio | Documentar el proceso paso a paso para poder retomarlo o delegarlo si hace falta
+Una sola variable explicativa (PBI) puede no alcanzar para explicar el indicador climático | Media | Medio | Evaluar incorporar variables adicionales (población, consumo de energía) si el modelo simple no alcanza el desempeño esperado
+6. Hitos y Criterios de Éxito
+Hito 1: Dataset de Argentina limpio y EDA completo (fin de semana 3)
+Hito 2: Dataset preparado con la variable de PBI, listo para modelar (fin de semana 6)
+Hito 3: Modelo(s) predictivo(s) entrenados y evaluados (fin de semana 9)
+Hito 3b: Extensión por provincia (24 capitales) corrida y ranking de calentamiento obtenido (fin de semana 9)
+Hito 4: Informe final y presentación listos (fin de semana 11)
+Criterio de éxito: El modelo de predicción supera a un baseline simple (repetir el último valor observado) en al menos un 15% de reducción del error, y el análisis PBI-cambio climático arroja conclusiones claras respaldadas por visualizaciones
