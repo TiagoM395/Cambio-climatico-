@@ -2,7 +2,7 @@
 
 **Finalidad de este documento:** formaliza el guion de exposición oral del trabajo y el preparo de respuestas ante preguntas. Está redactado en registro académico: el texto en cursiva corresponde a lo que se enuncia durante la exposición, y lo que figura entre corchetes es una indicación de acción o de navegación en la aplicación.
 
-**Datos del trabajo:** Cambio climático en Argentina y su relación con el crecimiento económico (PBI) · Matías Elías Campos y Tiago Maidana · Instituto 57, Tecnicatura Superior en Ciencia de Datos e Inteligencia Artificial, 2.º año, grupo 6 · Materia: Análisis y Exploración de Datos · Docente: Ibarra Martín · Fecha de entrega: 30/11/2026.
+**Datos del trabajo:** Cambio climático en Argentina y su relación con el crecimiento económico (PBI) · Elias Campos, Romina Guzman, Rodrigo Bulggiani y Tiago Maidana · Instituto 57, Tecnicatura Superior en Ciencia de Datos e Inteligencia Artificial, 2.º año, grupo 6 · Materia: Análisis y Exploración de Datos · Docente: Ibarra Martín · Fecha de entrega: 30/11/2026.
 
 **Criterio de redacción:** los términos técnicos se enuncian con su significado inmediato, entre paréntesis, conforme al criterio empleado en el resto del trabajo. Toda cifra que se mencione durante la exposición debe figurar en el **cuadro de cifras clave** (sección 8); en caso de duda, se recurre a la tabla correspondiente y se lee el valor, sin enunciar cifras memorizadas.
 
