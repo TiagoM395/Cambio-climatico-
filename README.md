@@ -207,6 +207,7 @@ Cambio-climatico-/
 ├── 📄 AYUDAMEMORIA_COMPLETO.md            # Memoria técnica: entorno, dependencias, tropiezos
 ├── 📄 VERIFICACION_DE_DATASETS.md        # URL, fecha y SHA-256 de cada dataset
 ├── 📄 COMO_LEVANTAR_EL_PROYECTO.md       # Instrucciones de arranque
+├── 📄 COMO_TRABAJAR_CON_GIT.md           # Guía de Git, ramas y trabajo en equipo
 ├── 📄 PENDIENTES_PARA_DEMOSTRAR_MAS.md   # Análisis futuros alcanzables
 ├── 📄 Plan_de_Proyecto_Cambio_Climatico_Argentina_CORREGIDO.docx
 ├── 📄 Trabajo_Integrador_Cambio_Climatico_Argentina_CORREGIDO.docx
