@@ -1,6 +1,10 @@
 # Cómo trabajar con Git y GitHub en equipo
 
-Este documento explica cómo nos organizamos para trabajar en este proyecto usando Git y GitHub, de modo que **nadie pise el trabajo de otro**, el código no se rompa y siempre sepamos quién hizo cada cambio.
+Este documento es una **guía de referencia y buenas prácticas** sobre cómo organizarnos para trabajar en este proyecto usando Git y GitHub, pensada para que **nadie pise el trabajo de otro**, el código no se rompa y siempre sepamos quién hizo cada cambio.
+
+> 💡 **Cada uno trabaja como le quede más cómodo:**  
+> Esta guía explica el flujo de trabajo estándar paso a paso, pero no es una imposición rígida de herramientas. Cada integrante puede usar el método con el que se sienta más a gusto: la **terminal de PowerShell**, los botones de **Source Control en VS Code**, **GitHub Desktop** o la herramienta visual que prefiera.  
+> Lo único verdaderamente importante para el equipo es **respetar la regla de oro**: trabajar en una rama propia y no subir directo a `main` para que la versión principal nunca se rompa.
 
 ---
 
@@ -96,9 +100,49 @@ git push -u origin tu-nombre/que-vas-a-hacer
 
 ---
 
-## 4. Integrar los cambios (Pull Request en GitHub)
+## 4. Cómo hacer todo desde Source Control en VS Code (Sin terminal)
 
-Una vez que subiste tu rama, no la unís desde tu máquina: se hace en GitHub para que el resto del equipo pueda ver qué cambió.
+Si preferís usar botones y no la terminal de comandos, **VS Code tiene todo integrado** visualmente.
+
+### Dónde están los controles en VS Code:
+- **Panel de Source Control:** En la barra vertical de la izquierda, el ícono con tres círculos conectados por líneas (o el atajo `Ctrl` + `Shift` + `G`).
+- **Selector de rama:** Abajo de todo a la izquierda, en la barra azul inferior, vas a ver el nombre de la rama en la que estás parado (por ejemplo `main` o tu rama).
+
+---
+
+### Paso a paso visual:
+
+#### 1. Traer lo último de `main`
+1. Hacé clic abajo a la izquierda sobre el nombre de la rama actual.
+2. En la lista desplegable que aparece arriba, seleccioná `main`.
+3. En el panel de Source Control (a la izquierda), hacé clic en los tres puntitos `...` de arriba y elegí **Pull** (o hacé clic en el ícono de las dos flechas circulares de sincronización abajo a la izquierda).
+
+#### 2. Crear tu rama nueva
+1. Hacé clic de nuevo en el nombre de la rama abajo a la izquierda.
+2. Hacé clic en la opción **"Create new branch..."** (*Crear nueva rama...*).
+3. Escribí el nombre de tu rama (ej: `tiago/grafico-lluvias`) y apretá `Enter`.  
+   *Vas a ver que el texto de la barra azul abajo a la izquierda cambia automáticamente al nombre de tu rama nueva.*
+
+#### 3. Ver qué cambiaste, hacer Stage y Commit
+A medida que edites o agregues archivos:
+1. En el panel de Source Control van a aparecer listados bajo **"Changes"** (*Cambios*).
+2. **Revisar qué cambiaste:** Si hacés clic en cualquier archivo de la lista, VS Code te abre una vista comparativa con lo que había antes a la izquierda y lo nuevo a la derecha.
+3. **Descartar si te equivocaste:** Si hiciste un cambio que no querías, pasá el mouse sobre el archivo y tocá el botón de la flecha curva `↩` (*Discard Changes*).
+4. **Hacer Stage (`git add`):**  
+   - Para agregar un archivo al commit, pasá el mouse por encima y hacé clic en el ícono de **`+`** (*Stage Changes*).  
+   - Para agregar todos juntos, hacé clic en el botón **`+`** que está al lado del título *"Changes"*. Los archivos pasarán a la sección *"Staged Changes"*.
+5. **Escribir el mensaje:** En la caja de texto arriba que dice *Message*, escribí qué hiciste (ej: `Ajustar escala del gráfico`).
+6. **Hacer Commit:** Hacé clic en el botón azul grande **Commit** (o en el tilde `✓` arriba).
+
+#### 4. Subir la rama a GitHub (Publish / Push)
+- **La primera vez:** En el panel izquierdo va a aparecer un botón azul grande que dice **"Publish Branch"** (*Publicar rama*). Hacé clic ahí. VS Code sube la rama a GitHub automáticamente.
+- **En los commits siguientes:** Hacé clic en el botón azul **"Sync Changes"** (*Sincronizar cambios*) o en los tres puntitos `...` -> **Push**.
+
+---
+
+## 5. Integrar los cambios (Pull Request en GitHub)
+
+Una vez que subiste tu rama (sea por terminal o por VS Code), la unión no se hace en tu máquina: se hace en GitHub para que el resto del equipo pueda ver qué cambió.
 
 1. **Abrí el repositorio en el navegador:**  
    [https://github.com/TiagoM395/Cambio-climatico-](https://github.com/TiagoM395/Cambio-climatico-)
@@ -113,25 +157,23 @@ Una vez que subiste tu rama, no la unís desde tu máquina: se hace en GitHub pa
 
 ---
 
-### Paso 6: Cerrar el ciclo en tu máquina
+### Cerrar el ciclo en tu máquina (después del merge)
 Una vez mergeado el Pull Request en GitHub:
 
-1. Volvé a `main`:
-   ```powershell
-   git checkout main
-   ```
-2. Bajate el `main` actualizado con tu cambio ya incorporado:
-   ```powershell
-   git pull origin main
-   ```
-3. *(Opcional)* Borrá la rama local que ya terminaste para no acumular ramas viejas:
-   ```powershell
-   git branch -d tu-nombre/que-vas-a-hacer
-   ```
+- **Por terminal:**
+  ```powershell
+  git checkout main
+  git pull origin main
+  git branch -d tu-nombre/que-vas-a-hacer
+  ```
+- **Por VS Code:**
+  1. Hacé clic en la rama abajo a la izquierda y cambiá a `main`.
+  2. Hacé clic en las flechas de sincronización para bajar lo último (`Pull`).
+  3. En la terminal podés borrar la rama que ya mergeaste con `git branch -d tu-nombre/que-vas-a-hacer`.
 
 ---
 
-## 5. Cómo evitar que nos pisemos (Conflictos)
+## 6. Cómo evitar que nos pisemos (Conflictos)
 
 Un **conflicto de merge** ocurre cuando dos personas editan las **mismas líneas del mismo archivo** al mismo tiempo. Git no puede adivinar cuál de las dos versiones es la correcta y pide que una persona elija.
 
@@ -165,7 +207,7 @@ Si al hacer merge Git te avisa que hay un conflicto:
 
 ---
 
-## 6. Particularidades importantes de este proyecto
+## 7. Particularidades importantes de este proyecto
 
 - **Nunca subir entornos virtuales (`.venv`, `env`, etc.):**  
   El entorno virtual está fuera del repositorio por diseño (`C:\Users\tiago\.venvs\clima`). Nunca crees un entorno adentro de la carpeta del proyecto porque pesaría cientos de megabytes y rompería Git.
@@ -178,7 +220,7 @@ Si al hacer merge Git te avisa que hay un conflicto:
 
 ---
 
-## 7. Machete rápido de comandos frecuentes
+## 8. Machete rápido de comandos frecuentes
 
 | Qué querés hacer | Comando |
 | :--- | :--- |
