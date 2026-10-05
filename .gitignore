@@ -25,3 +25,6 @@ desktop.ini
 # asi que no va al repo (el historial de git ya es el respaldo).
 # Si igual lo queres subido, borra estas dos lineas.
 _RESPALDO/
+
+# Notas privadas para el agente de AI (AGENTS.md). No va al repo.
+AGENTS.md
